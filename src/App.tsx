@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ListPage from './Pages/ListPage';
-import Signin from './components/Sign/Signin';
+import Signin from './Pages/SigninPage';
 
 function App() {
   const dumyUser = null;

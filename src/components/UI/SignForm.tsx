@@ -2,12 +2,15 @@ import React from "react";
 
 type signFormProps = {
     type:string, 
-    formHandler: (event:React.FormEvent) => void
 };
 
 const SignForm:React.FC<signFormProps> = (props) => {
-    const type = props.type == 'signin' ? "로그인" : "로그아웃";
-    console.log(type);
+    const type = props.type == 'signin' ? "로그인" : "회원가입";
+  
+    const signformHandler = (event: React.FormEvent) => {
+        event.preventDefault();
+    }
+
     return (
         <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -18,7 +21,7 @@ const SignForm:React.FC<signFormProps> = (props) => {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" method="POST" onSubmit={props.formHandler}>
+                <form className="space-y-6" action="#" method="POST" onSubmit={signformHandler}>
                     <div>
                     <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                         이메일
@@ -34,6 +37,27 @@ const SignForm:React.FC<signFormProps> = (props) => {
                         />
                     </div>
                     </div>
+
+                    {
+                        props.type == 'signup' && 
+                        (
+                            <div>
+                            <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+                                이름
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                id="name"
+                                name="name"
+                                type="text"
+                                autoComplete="name"
+                                required
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                />
+                            </div>
+                            </div>
+                        )
+                    }
 
                     <div>
                     <div className="flex items-center justify-between">
@@ -62,6 +86,11 @@ const SignForm:React.FC<signFormProps> = (props) => {
                     </button>
                     </div>
                 </form>
+                <div className="text-right text-sm">
+                    {props.type == 'signin' && <a href="/sigup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                        회원가입
+                        </a> }
+                    </div>
                 </div>
             </div>
         </>
