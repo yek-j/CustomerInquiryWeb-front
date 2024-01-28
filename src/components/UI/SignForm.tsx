@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useNavigate  } from "react-router-dom";
 
 type signFormProps = {
     type:string, 
@@ -6,9 +7,35 @@ type signFormProps = {
 
 const SignForm:React.FC<signFormProps> = (props) => {
     const type = props.type == 'signin' ? "로그인" : "회원가입";
+    const navigate = useNavigate();
   
-    const signformHandler = (event: React.FormEvent) => {
+    const signformHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        
+
+        fetch('http://localhost:8080/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name:formData.get("name"),
+                email: formData.get('email'),
+                password: formData.get('password'),
+            }),
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.result == "ok") {
+                navigate('/signin');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+        });
+
     }
 
     return (
@@ -87,9 +114,9 @@ const SignForm:React.FC<signFormProps> = (props) => {
                     </div>
                 </form>
                 <div className="text-right text-sm">
-                    {props.type == 'signin' && <a href="/sigup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                        회원가입
-                        </a> }
+                    {props.type == 'signin' && <p className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                        <Link to="/signup">회원가입</Link>
+                        </p> }
                     </div>
                 </div>
             </div>
