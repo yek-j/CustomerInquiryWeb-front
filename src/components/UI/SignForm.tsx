@@ -1,42 +1,13 @@
 import React from "react";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 type signFormProps = {
     type:string, 
+    handler: (event: React.FormEvent<HTMLFormElement>) => void,
 };
 
 const SignForm:React.FC<signFormProps> = (props) => {
     const type = props.type == 'signin' ? "로그인" : "회원가입";
-    const navigate = useNavigate();
-  
-    const signformHandler = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        
-
-        fetch('http://localhost:8080/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name:formData.get("name"),
-                email: formData.get('email'),
-                password: formData.get('password'),
-            }),
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            if(data.result == "ok") {
-                navigate('/signin');
-            }
-        })
-        .catch(err => {
-            console.error(err);
-        });
-
-    }
 
     return (
         <>
@@ -48,7 +19,7 @@ const SignForm:React.FC<signFormProps> = (props) => {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" method="POST" onSubmit={signformHandler}>
+                <form className="space-y-6" action="#" method="POST" onSubmit={props.handler}>
                     <div>
                     <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                         이메일
