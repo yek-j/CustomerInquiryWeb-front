@@ -1,8 +1,14 @@
 import React from "react"
+import {useNavigate} from 'react-router-dom'
 
 import SignForm from "../components/UI/SignForm";
 
 const Signin:React.FC = () => {
+    const navigate = useNavigate();
+
+    if(localStorage.getItem("token")) {
+        navigate("/");
+    }
 
     const signinHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -18,10 +24,17 @@ const Signin:React.FC = () => {
                 password: formData.get('password'),
             }),
         })
-        .then(res => res.json())
+        .then(res => {
+            if(res.status == 401){
+                alert("로그인 실패");
+                throw new Error("로그인 실패");
+            } 
+            return res.json();
+        })
         .then(data => {
             // 로그인 성공 후..
-            console.log(data);
+            localStorage.setItem("token",data.token);
+            navigate('/');
         })
         .catch((err) => {
             console.error(err.message);
