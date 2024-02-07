@@ -1,14 +1,14 @@
 import React from "react"
 import {useNavigate} from 'react-router-dom'
+import { nameState } from "../components/state/nameState";
 
 import SignForm from "../components/UI/SignForm";
+import { useRecoilState } from "recoil";
 
 const Signin:React.FC = () => {
+    const [, setUserName]  = useRecoilState(nameState);
     const navigate = useNavigate();
 
-    if(localStorage.getItem("token")) {
-        navigate("/");
-    }
 
     const signinHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -33,8 +33,9 @@ const Signin:React.FC = () => {
         })
         .then(data => {
             // 로그인 성공 후..
-            localStorage.setItem("token",data.token);
-            navigate('/');
+            localStorage.setItem("token", data.token);
+            setUserName(data.name);
+            navigate("/");
         })
         .catch((err) => {
             console.error(err.message);
