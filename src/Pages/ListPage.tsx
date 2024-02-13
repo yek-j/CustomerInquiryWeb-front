@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom'
 
 import Header from "../components/UI/Header";
+import BoardList from "../components/UI/BoardList";
 
 const ListPage:React.FC = () => {
     const navigate = useNavigate();
@@ -9,7 +10,7 @@ const ListPage:React.FC = () => {
 
     useEffect(() => {
         if(localStorage.getItem("token") == null) navigate("/signin");
-        fetch('http://localhost:8080/', {
+        fetch(import.meta.env.VITE_API_URL, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,8 +29,7 @@ const ListPage:React.FC = () => {
     return (
         <div className="grid place-items-center">
             <Header admin={admin}/>
-            <h1>List Page</h1>
-
+            <BoardList />
         </div>
     );
 };

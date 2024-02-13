@@ -10,7 +10,7 @@ const Signup:React.FC = () => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         
-        fetch('http://localhost:8080/signup', {
+        fetch(import.meta.env.VITE_API_URL + '/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
