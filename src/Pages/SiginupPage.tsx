@@ -1,7 +1,7 @@
 import React from "react"
 import {useNavigate} from 'react-router-dom'
 
-import SignForm from "../components/UI/SignForm";
+import SignForm from "../components/Common/SignForm";
 
 const Signup:React.FC = () => {
     const navigate = useNavigate();

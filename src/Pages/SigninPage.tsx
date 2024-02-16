@@ -2,7 +2,7 @@ import React from "react"
 import {useNavigate} from 'react-router-dom'
 import { nameState } from "../components/state/nameState";
 
-import SignForm from "../components/UI/SignForm";
+import SignForm from "../components/Common/SignForm";
 import { useRecoilState } from "recoil";
 
 const Signin:React.FC = () => {

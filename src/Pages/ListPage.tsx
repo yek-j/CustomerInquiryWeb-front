@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom'
 
-import Header from "../components/UI/Header";
-import BoardList from "../components/UI/BoardList";
+import Header from "../components/Common/Header";
+import BoardList from "../components/Board/BoardList";
 
 const ListPage:React.FC = () => {
     const navigate = useNavigate();
