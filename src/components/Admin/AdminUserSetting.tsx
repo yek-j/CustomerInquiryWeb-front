@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
-import GroupSelect from "./GroupSelect";
+import GroupSelect from "../Common/Select";
+import Button from "../Common/Button";
 
 type userInfo = {
     email: string,
@@ -14,6 +15,10 @@ const AdminUserSetting: React.FC = () => {
         email: "", groupId: "", groupName: "", admin: ""
     });
     const [userList, setUserList] = useState(['']);
+    const [adminChecked, setAdminChecked] = useState(false);
+    const [selectGroupList, setSelectGroupList] = useState<[{id: string, name: string}]>([{id:"", name:""}]);
+
+    const [group, setGroup] = useState("");
 
     useEffect(() => {
         fetch(import.meta.env.VITE_API_URL + '/admin/userlist', {
@@ -26,6 +31,18 @@ const AdminUserSetting: React.FC = () => {
         .then(res => res.json())
         .then(data => {
             setUserList(data);
+        });
+
+        fetch(import.meta.env.VITE_API_URL + '/admin/select-group', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+        })
+        .then(res => res.json())
+        .then(data => {
+            setSelectGroupList(data);
         });
     }, []);
 
@@ -41,8 +58,26 @@ const AdminUserSetting: React.FC = () => {
         .then(res => res.json())
         .then(data => {
             setUserInfo(data);
+            setAdminChecked(data.admin === "admin" ? true : false);
         });
     }
+
+    const setGroupChangeHandler = (event:React.ChangeEvent<HTMLSelectElement>) => {
+        setGroup(event.target.value);
+        setUserInfo((prev) => ({
+            ...prev, 
+            groupId: event.target.value
+        }));
+    }
+
+    const setAdminCheckedHandler = () => {
+        setAdminChecked(!adminChecked);
+    }
+
+    const saveGroup = () => {
+
+    }
+
     return (
         <div className="grid grid-cols-2 divide-x ">
             <div className="shadow-md rounded-md">
@@ -59,10 +94,14 @@ const AdminUserSetting: React.FC = () => {
                     </div>
                     <div className="flex items-center">
                         &#8203;
-                        <input type="checkbox" className="size-4 rounded border-gray-300" id="Admin" />
+                        <input type="checkbox" 
+                            checked={adminChecked}
+                            onClick={setAdminCheckedHandler} 
+                            className="size-4 rounded border-gray-300" id="Admin" />
                     </div>
                 </label>
-                <GroupSelect group={userInfo.groupId}/>
+                <GroupSelect group={userInfo.groupId} changeHandler={setGroupChangeHandler} name={"Group"} data={selectGroupList}/>
+                <Button str={"저장"} handler={saveGroup}/>
             </div>
         </div>
     );
