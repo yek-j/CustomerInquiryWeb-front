@@ -18,7 +18,7 @@ const AdminUserSetting: React.FC = () => {
     const [adminChecked, setAdminChecked] = useState(false);
     const [selectGroupList, setSelectGroupList] = useState<[{id: string, name: string}]>([{id:"", name:""}]);
 
-    const [group, setGroup] = useState("");
+    const [, setGroupId] = useState("");
 
     useEffect(() => {
         fetch(import.meta.env.VITE_API_URL + '/admin/userlist', {
@@ -33,7 +33,7 @@ const AdminUserSetting: React.FC = () => {
             setUserList(data);
         });
 
-        fetch(import.meta.env.VITE_API_URL + '/admin/select-group', {
+        fetch(import.meta.env.VITE_API_URL + '/admin/grouplist', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ const AdminUserSetting: React.FC = () => {
     }
 
     const setGroupChangeHandler = (event:React.ChangeEvent<HTMLSelectElement>) => {
-        setGroup(event.target.value);
+        setGroupId(event.target.value);
         setUserInfo((prev) => ({
             ...prev, 
             groupId: event.target.value
@@ -72,10 +72,22 @@ const AdminUserSetting: React.FC = () => {
 
     const setAdminCheckedHandler = () => {
         setAdminChecked(!adminChecked);
+        setUserInfo((prev) => ({
+            ...prev, 
+            admin: !adminChecked ? "admin" : "user"
+        }));
     }
 
     const saveGroup = () => {
-
+        fetch(import.meta.env.VITE_API_URL + '/admin/set-group', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(userInfo),
+        })
+        .then(_ => alert("저장"));
     }
 
     return (
