@@ -47,7 +47,7 @@ const AdminUserSetting: React.FC = () => {
     }, []);
 
     const getGroupbyEmail: React.MouseEventHandler<HTMLLIElement> = (event) => {
-        const clickedEmail = event.currentTarget.textContent;
+        const clickedEmail = event.currentTarget.textContent!;
         fetch(import.meta.env.VITE_API_URL + '/admin/userauth/'+clickedEmail, {
             method: 'GET',
             headers: {
@@ -79,8 +79,8 @@ const AdminUserSetting: React.FC = () => {
     }
 
     const saveGroup = () => {
-        fetch(import.meta.env.VITE_API_URL + '/admin/set-group', {
-            method: 'POST',
+        fetch(import.meta.env.VITE_API_URL + '/admin/set-userauth', {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -108,7 +108,7 @@ const AdminUserSetting: React.FC = () => {
                         &#8203;
                         <input type="checkbox" 
                             checked={adminChecked}
-                            onClick={setAdminCheckedHandler} 
+                            onChange={setAdminCheckedHandler} 
                             className="size-4 rounded border-gray-300" id="Admin" />
                     </div>
                 </label>
