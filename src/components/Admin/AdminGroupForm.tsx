@@ -53,8 +53,8 @@ const AdminGroupForm: React.FC<groupForm> = (props) => {
                 { !props.newForm && <span className="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700">
                     인원 : {group.userCount} 명
                 </span> } &nbsp;
-                <Button str={props.newForm ? "추가" : "저장"} handler={props.saveHandler}/>
-                { !props.newForm && <Button str={"삭제"} handler={props.deleteHandler}/> }
+                <Button str={props.newForm ? "추가" : "저장"} handler={props.saveHandler} class="inline-block rounded-md bg-indigo-200 px-4 py-2 text-sm text-blue-500 shadow-sm focus:relative" />
+                { !props.newForm && <Button str={"삭제"} handler={props.deleteHandler} class={"inline-block rounded-md bg-red-100 px-4 py-2 text-sm text-red-500 shadow-sm focus:relative"} /> }
         </>
     );
 }

@@ -12,6 +12,10 @@ const Header:React.FC<stateAdmin> = (props) => {
     const navigate = useNavigate();
     const [userName, ] = useRecoilState(nameState);
 
+    const homeHandler = () => {
+        navigate("/");
+    }
+
     const signOutHandler = () => {
         localStorage.clear();
         navigate("/signin");
@@ -19,7 +23,7 @@ const Header:React.FC<stateAdmin> = (props) => {
 
     return (
         <header className="grid grid-cols-2 bg-slate-50 rounded-lg w-full h-14 my-3 drop-shadow-sm	">
-            <img className="pl-6 py-1" src="/src/assets/logo.jpg"/>
+            <img className="pl-6 py-1" src="/src/assets/logo.jpg" onClick={homeHandler}/>
             
             <details className="py-3 w-32 justify-self-end mr-5">
                 <summary className="rounded-lg bg-indigo-100 marker:[font-size:0px] w-32 text-center text-lg cursor-pointer">{userName} 님!</summary>

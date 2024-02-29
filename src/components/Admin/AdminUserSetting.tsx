@@ -113,7 +113,7 @@ const AdminUserSetting: React.FC = () => {
                     </div>
                 </label>
                 <GroupSelect group={userInfo.groupId} changeHandler={setGroupChangeHandler} name={"Group"} data={selectGroupList}/>
-                <Button str={"저장"} handler={saveGroup}/>
+                <Button str={"저장"} class={"inline-block rounded-md bg-indigo-200 px-4 py-2 text-sm text-blue-500 shadow-sm focus:relative"} handler={saveGroup}/>
             </div>
         </div>
     );
