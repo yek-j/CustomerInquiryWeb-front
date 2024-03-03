@@ -29,11 +29,11 @@ const BoardDetail:React.FC<stateBoard> = (props) => {
             <div className="flex justify-end pb-6 pr-3">
                 {
                     props.board.edit && 
-                    <Button  str={"수정"} handler={() => {}} class="mr-3 inline-block rounded-md bg-red-200 px-4 py-2 text-sm text-red-500 shadow-sm focus:relative"/>
+                    <Button  str={"수정"} handler={() => {}} class="mr-3 inline-block rounded-md bg-blue-200 px-4 py-2 text-sm text-blue-500 shadow-sm focus:relative"/>
                 }
                 {
                     props.board.edit && 
-                    <Button  str={"삭제"} handler={() => {}} class="inline-block rounded-md bg-blue-200 px-4 py-2 text-sm text-blue-500 shadow-sm focus:relative"/>
+                    <Button  str={"삭제"} handler={() => {}} class="inline-block rounded-md bg-red-200 px-4 py-2 text-sm text-red-500 shadow-sm focus:relative"/>
                 
                 }
             </div>
