@@ -22,7 +22,7 @@ const ListPage:React.FC = () => {
         })
         .then(res => res.json())
         .then(data => {
-            if(data.admin == "user" && data.group == "") {
+            if(data.admin == "user" && data.group == null) {
                 navigate("/admincheck");
             } else if(data.admin == "admin") {
                 setAdmin(data.admin);
