@@ -15,14 +15,12 @@ const BoardItem: React.FC<item> = (props) => {
             className="mx-10 mb-4 hover:animate-background rounded-xl bg-indigo-200 p-0.5 shadow-xl transition hover:bg-indigo-700 hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]"
         >
             <div className="rounded-[10px] bg-white p-4 ">
-                <a href="#">
-                    <p className="mt-0.5 text-lg font-bold text-gray-900">
-                        {props.item.title}
-                    </p>
-                    <p className="text-sm">
-                        {props.item.preview}
-                    </p>
-                </a>
+                <p className="mt-0.5 text-lg font-bold text-gray-900">
+                    {props.item.title}
+                </p>
+                <p className="text-sm">
+                    {props.item.preview}
+                </p>
 
                 <div className="mt-4 flex flex-wrap gap-1">
                     <span

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import BoardItem from "./BoardItem";
 import { BoardItemType } from "../type/BoardItemType";
 import { fetchList } from "./BoardListFetch";
+import { Link } from "react-router-dom";
 
 
 
@@ -48,7 +49,11 @@ const BoardList: React.FC = () => {
     return (
         <div className="grid ">
             <div className="divide-y divide-gray-100 mt-6 w-full">
-                {boardList.map((item) => (<BoardItem key={item.id} item={item} />))}
+                {
+                    boardList.map((item) => (
+                        <Link key={item.id} to={"/board/" + item.id}><BoardItem item={item} /></Link>
+                    ))
+                }
                 
             </div>
             <div className="inline-flex items-center justify-center gap-3 mb-8">
