@@ -1,20 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import { BoardDetailType } from "../type/BoardItemType";
 import Button from "../Common/Button";
+import BoardResolved from "./BoardResolved";
 
 type stateBoard = {
     board: BoardDetailType
     update: () => void,
-    delete: () => void
+    delete: () => void,
+    resolved: () => void,
 }
 
 const BoardDetail:React.FC<stateBoard> = (props) => {
 
-    const [resolveClass, setResolveClass] = useState('-mb-[2px] -me-[2px] inline-flex items-center gap-1 rounded-ee-xl rounded-ss-xl bg-green-600 px-3 py-1.5 text-white')
-
-    useEffect(() => {
-        if(!props.board.resolved) setResolveClass('-mb-[2px] -me-[2px] inline-flex items-center gap-1 rounded-ee-xl rounded-ss-xl bg-red-600 px-3 py-1.5 text-white');
-    }, []);
 
     return(
         <div className="rounded-xl border-2 border-gray-100 bg-white mx-10">
@@ -48,32 +45,9 @@ const BoardDetail:React.FC<stateBoard> = (props) => {
                        그룹 : {props.board.groupName} / 작성자 : {props.board.writerName}
                     </span>
                 </div>
-                <strong
-                    className={resolveClass}
-                >
-                    
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                    >
-                        <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                        />
-                    </svg>
+                {!props.board.resolved && <BoardResolved click={props.resolved} class="-mb-[2px] -me-[2px] inline-flex items-center gap-1 rounded-ee-xl rounded-ss-xl bg-red-600 px-3 py-1.5 text-white" name={"미해결"} />}
+                {props.board.resolved && <BoardResolved click={props.resolved} class="-mb-[2px] -me-[2px] inline-flex items-center gap-1 rounded-ee-xl rounded-ss-xl bg-green-600 px-3 py-1.5 text-white" name={"해결"} />}
 
-                    <span className="text-[10px] font-medium sm:text-xs">
-                        {
-                            props.board.resolved ? "해결" : "미해결"
-                        }
-                                
-                    </span>
-                </strong>
             </div>
         </div>
     );

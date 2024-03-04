@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import BoardDetail from "../components/Board/BoardDetail";
 import { BoardDetailType } from "../components/type/BoardItemType";
 import Header from "../components/Common/Header";
-import { fetchDeleteBoard } from "../components/Board/BoardFetch";
+import { fetchDeleteBoard, fetchUpdateResolved } from "../components/Board/BoardFetch";
 import BoardForm from "../components/Board/BoardForm";
 
 const Board:React.FC = () => {
@@ -45,6 +45,16 @@ const Board:React.FC = () => {
         else alert("undefined 삭제 실패") ;
     }
 
+    const resolvedHandler = () => {
+        if(id != undefined) {
+            fetchUpdateResolved(id) 
+                .then((saveOK) => {
+                    if(saveOK) setReload(!reload);
+                });
+            }
+        else alert("undefined 실패") ;
+    }
+
     useEffect(() => {
         fetch(import.meta.env.VITE_API_URL + '/board/' + id, {
             method: 'GET',
@@ -84,7 +94,7 @@ const Board:React.FC = () => {
                     </span>
                 </a>
             </div>
-                {!updateComponent && <BoardDetail board={board} update={updateComponentHandler} delete={deleteBoardHandler} />}
+                {!updateComponent && <BoardDetail board={board} resolved={resolvedHandler} update={updateComponentHandler} delete={deleteBoardHandler}/>}
             
             <div className="grid place-items-center">
                 {updateComponent && <BoardForm id={id} change={updateCompleteHandler} board={{title:board.title, content:board.content}}/>}

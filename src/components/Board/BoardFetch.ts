@@ -95,3 +95,29 @@ export const fetchUpdateBoard = async (id: string, board: SaveBoard) => {
 
     return saveOK;
 }
+
+export const fetchUpdateResolved = async (id: string) => {
+    let saveOK = false;
+    await fetch(import.meta.env.VITE_API_URL + '/board/resolved/' + id ,{
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }, 
+    })
+    .then(res => {
+        if(res.status === 200) {
+            alert("해결 상태 수정 성공");
+            saveOK = true;
+        } else {
+            return res.text().then(errorMessage => {
+                throw new Error(errorMessage);
+            });
+        }
+    })
+    .catch(error => {
+        alert('Error: ' + error.message);
+    });
+
+    return saveOK;
+}
