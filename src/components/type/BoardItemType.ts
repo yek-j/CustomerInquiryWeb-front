@@ -23,3 +23,7 @@ export type BoardDetailType = BoardType & {
     edit: boolean,
 }
 
+export type SaveBoard = {
+    title: string,
+    content: string,
+}

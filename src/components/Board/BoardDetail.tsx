@@ -4,6 +4,8 @@ import Button from "../Common/Button";
 
 type stateBoard = {
     board: BoardDetailType
+    update: () => void,
+    delete: () => void
 }
 
 const BoardDetail:React.FC<stateBoard> = (props) => {
@@ -15,7 +17,7 @@ const BoardDetail:React.FC<stateBoard> = (props) => {
     }, []);
 
     return(
-        <div className="rounded-xl border-2 border-gray-100 bg-white m-10">
+        <div className="rounded-xl border-2 border-gray-100 bg-white mx-10">
             <div className="flex items-start gap-4 p-4 flex-shrink-0 w-full pb-20">
                 <div>
                     <p className="block font-bold sm:text-lg pb-4">
@@ -29,11 +31,11 @@ const BoardDetail:React.FC<stateBoard> = (props) => {
             <div className="flex justify-end pb-6 pr-3">
                 {
                     props.board.edit && 
-                    <Button  str={"수정"} handler={() => {}} class="mr-3 inline-block rounded-md bg-blue-200 px-4 py-2 text-sm text-blue-500 shadow-sm focus:relative"/>
+                    <Button  str={"수정"} handler={props.update} class="mr-3 inline-block rounded-md bg-blue-200 px-4 py-2 text-sm text-blue-500 shadow-sm focus:relative"/>
                 }
                 {
                     props.board.edit && 
-                    <Button  str={"삭제"} handler={() => {}} class="inline-block rounded-md bg-red-200 px-4 py-2 text-sm text-red-500 shadow-sm focus:relative"/>
+                    <Button  str={"삭제"} handler={props.delete} class="inline-block rounded-md bg-red-200 px-4 py-2 text-sm text-red-500 shadow-sm focus:relative"/>
                 
                 }
             </div>

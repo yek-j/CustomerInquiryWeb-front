@@ -1,33 +1,38 @@
-import React, {ChangeEvent, FormEvent, useState} from "react";
+import React, {ChangeEvent, FormEvent, useState, useEffect} from "react";
+import { fetchSaveBoard, fetchUpdateBoard } from "./BoardFetch";
+import { SaveBoard } from "../type/BoardItemType";
 
-const BoardForm: React.FC = () => {
+type BoardForm = {
+    board: SaveBoard | null,
+    id: string | undefined,
+    change: () => void 
+}
 
-    const [formData, setFormData] = useState({title: '', content: ''});
+const BoardForm: React.FC<BoardForm> = (props) => {
+    const [formData, setFormData] = useState<SaveBoard>({title: '', content: ''});
+
+    useEffect(() => {
+        if (props.board != null) {
+            setFormData({title:props.board.title, content:props.board.content});
+        }        
+    }, []);
 
     const saveBoard = (e: FormEvent) => {
         e.preventDefault();
 
-        fetch(import.meta.env.VITE_API_URL + '/add-board', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }, 
-            body: JSON.stringify(formData)
-        })
-        .then(res => {
-            if(res.status === 200) {
-                alert("저장 성공");
-                setFormData({title: '', content: ''});
-            } else {
-                return res.text().then(errorMessage => {
-                    throw new Error(errorMessage);
+        if(props.id === '') {
+            fetchSaveBoard(formData)
+                .then((saveOK) => {
+                    if(saveOK) setFormData({title: '', content: ''});
                 });
-            }
-        })
-        .catch(error => {
-            alert('Error: ' + error.message);
-        });
+        } else if(props.id != undefined) {
+            fetchUpdateBoard(props.id, formData) 
+                .then((saveOK) => {
+                    if(saveOK) props.change;
+                });
+        } else {
+            alert("undefined 오류!");
+        }
     }
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

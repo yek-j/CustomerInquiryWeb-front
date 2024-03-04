@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react"
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import BoardDetail from "../components/Board/BoardDetail";
 import { BoardDetailType } from "../components/type/BoardItemType";
 import Header from "../components/Common/Header";
+import { fetchDeleteBoard } from "../components/Board/BoardFetch";
+import BoardForm from "../components/Board/BoardForm";
 
 const Board:React.FC = () => {
-
+    const navigate = useNavigate();
     const {id} = useParams();
     const [board, setBoard] = useState<BoardDetailType>({
         boardComment:[],
@@ -18,6 +20,30 @@ const Board:React.FC = () => {
         admin: 'user',
         edit: false,
     });
+    const [updateComponent, setUpdateComponent] = useState(false);
+    const [reload, setReload] = useState(false);
+
+    const updateComponentHandler = () => {
+        setUpdateComponent(true);
+    }
+
+    const updateCompleteHandler = () => {
+        setUpdateComponent(false);
+        setReload(!reload);
+    }
+
+    const backBtnHandler = () => {
+        if (updateComponent) setUpdateComponent(false);
+        else navigate("/");
+    }
+
+    const deleteBoardHandler = () => {
+        if(id != undefined) {
+            fetchDeleteBoard(id)
+                .then(deleteOK => { if(deleteOK) navigate("/")});
+        }
+        else alert("undefined 삭제 실패") ;
+    }
 
     useEffect(() => {
         fetch(import.meta.env.VITE_API_URL + '/board/' + id, {
@@ -42,12 +68,28 @@ const Board:React.FC = () => {
         .catch(error => {
             alert('Error: ' + error.message);
         });
-    }, []);
+    }, [reload]);
 
     return(
         <div>
-            <Header admin={board.admin}/>
-            <BoardDetail board={board}/>
+            <Header admin={board.admin} />
+            <div className="flex justify-end">
+                <a className="group my-1 mr-10 relative inline-block text-sm font-medium text-red-600 focus:outline-none focus:ring active:text-red-500"
+                    onClick={backBtnHandler}>
+                    <span className="absolute inset-0 border border-current"></span>
+                    <span
+                        className="block border border-current bg-white px-12 py-3 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1"
+                    >
+                        돌아가기
+                    </span>
+                </a>
+            </div>
+                {!updateComponent && <BoardDetail board={board} update={updateComponentHandler} delete={deleteBoardHandler} />}
+            
+            <div className="grid place-items-center">
+                {updateComponent && <BoardForm id={id} change={updateCompleteHandler} board={{title:board.title, content:board.content}}/>}
+                
+            </div>
         </div>
     );
 }

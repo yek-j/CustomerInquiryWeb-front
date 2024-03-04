@@ -54,7 +54,7 @@ const ListPage:React.FC = () => {
             <div className="w-full">
                 {!writeMode && <BoardList />}
                 
-                {writeMode && <BoardForm />}
+                {writeMode && <BoardForm id={""} change={() => {}} board={null}/>}
             </div>
 
         </div>

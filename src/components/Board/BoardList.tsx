@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import BoardItem from "./BoardItem";
 import { BoardItemType } from "../type/BoardItemType";
-import { fetchList } from "./BoardListFetch";
+import { fetchList } from "./BoardFetch";
 import { Link } from "react-router-dom";
 
 
