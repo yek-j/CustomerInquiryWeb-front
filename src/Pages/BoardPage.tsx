@@ -5,6 +5,7 @@ import { BoardDetailType } from "../components/type/BoardItemType";
 import Header from "../components/Common/Header";
 import { fetchDeleteBoard, fetchUpdateResolved } from "../components/Board/BoardFetch";
 import BoardForm from "../components/Board/BoardForm";
+import BoardComment from "../components/Board/BoardComment/BoardComment";
 
 const Board:React.FC = () => {
     const navigate = useNavigate();
@@ -95,10 +96,11 @@ const Board:React.FC = () => {
                 </a>
             </div>
                 {!updateComponent && <BoardDetail board={board} resolved={resolvedHandler} update={updateComponentHandler} delete={deleteBoardHandler}/>}
-            
+            <div>
+                <BoardComment/>
+            </div>
             <div className="grid place-items-center">
                 {updateComponent && <BoardForm id={id} change={updateCompleteHandler} board={{title:board.title, content:board.content}}/>}
-                
             </div>
         </div>
     );
