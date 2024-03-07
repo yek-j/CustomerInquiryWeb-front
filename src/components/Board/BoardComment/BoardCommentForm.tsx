@@ -1,10 +1,14 @@
-import React from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 
 type BoardCommentFormType = {
-    saveComment: () => void,
+    comment: string,
+    saveComment: (e: FormEvent) => void,
+    changeComment: (e: ChangeEvent<HTMLTextAreaElement>) => void
 }
 
 const BoardCommentForm:React.FC<BoardCommentFormType> = (props) => {
+    
+    
     return(
         <form onSubmit={props.saveComment} className="flex items-start p-6 ml-5 ">
             <div className="w-5/6">
@@ -15,6 +19,8 @@ const BoardCommentForm:React.FC<BoardCommentFormType> = (props) => {
                     rows={2}
                     id="comment"
                     name="comment"
+                    value={props.comment}
+                    onChange={props.changeComment}
                 />
                 
             </div>

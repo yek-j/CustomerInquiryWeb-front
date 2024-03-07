@@ -97,7 +97,7 @@ const Board:React.FC = () => {
             </div>
                 {!updateComponent && <BoardDetail board={board} resolved={resolvedHandler} update={updateComponentHandler} delete={deleteBoardHandler}/>}
             <div>
-                <BoardComment/>
+                <BoardComment id={id}/>
             </div>
             <div className="grid place-items-center">
                 {updateComponent && <BoardForm id={id} change={updateCompleteHandler} board={{title:board.title, content:board.content}}/>}
