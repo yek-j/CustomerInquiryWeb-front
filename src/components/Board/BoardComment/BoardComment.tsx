@@ -1,12 +1,15 @@
-import React, { ChangeEvent, FormEvent, useState, useEffect} from "react";
+import React, { ChangeEvent, FormEvent, useState, useEffect, ReactNode} from "react";
 import {useNavigate} from 'react-router-dom'
 import BoardCommentForm from "./BoardCommentForm";
+import BoardCommentItem from "./BoardCommentItem";
+import { boardCommentItemType } from "../../type/BoardCommentItemType";
 
-type boardId = {
-    id:string | undefined
+type boardCommentParam = {
+    id:string | undefined,
+    comment: boardCommentItemType[]
 }
 
-const BoardComment:React.FC<boardId> = (props) => {
+const BoardComment:React.FC<boardCommentParam> = (props) => {
     const navigate = useNavigate();
     const [commentForm, setCommentForm] = useState({boardId:'', comment:''});
     const [reload, setReload] = useState(false);
@@ -56,10 +59,15 @@ const BoardComment:React.FC<boardId> = (props) => {
             comment: e.target.value,
         });
     }
+    const BoardCommentItemRender: ReactNode[] = props.comment.map((object, index) => (
+        <BoardCommentItem key={index} comment={object.comment} 
+            writer={object.writer} date={object.date}/>
+    ));
 
     return(
         <div>
             <BoardCommentForm changeComment={changeCommentHandler} comment={commentForm.comment} saveComment={commentSaveHandler} />
+            {BoardCommentItemRender}
         </div>
     );
 }

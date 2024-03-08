@@ -1,3 +1,5 @@
+import { boardCommentItemType } from "./BoardCommentItemType";
+
 interface BoardType {
     writerName: string;
     groupName: string;
@@ -12,12 +14,12 @@ export type BoardItemType = BoardType &  {
 }
 
 export type BoardPageType = {
-    list: [BoardItemType],
+    list: BoardItemType[],
     total: number,
 }
 
 export type BoardDetailType = BoardType & {
-    boardComment: [],
+    boardComment: boardCommentItemType[],
     content: string,
     admin: string,
     edit: boolean,

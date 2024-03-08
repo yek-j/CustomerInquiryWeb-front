@@ -1,4 +1,3 @@
-// BoardList에서 표시되는 게시판 내용
 import React from "react";
 import { BoardItemType } from "../type/BoardItemType";
 

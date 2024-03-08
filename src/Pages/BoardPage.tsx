@@ -11,7 +11,7 @@ const Board:React.FC = () => {
     const navigate = useNavigate();
     const {id} = useParams();
     const [board, setBoard] = useState<BoardDetailType>({
-        boardComment:[],
+        boardComment:[{writer:'', comment:'', date:''}],
         title: '',
         content: '',
         wdate: '',
@@ -97,7 +97,7 @@ const Board:React.FC = () => {
             </div>
                 {!updateComponent && <BoardDetail board={board} resolved={resolvedHandler} update={updateComponentHandler} delete={deleteBoardHandler}/>}
             <div>
-                <BoardComment id={id}/>
+                <BoardComment id={id} comment={board.boardComment}/>
             </div>
             <div className="grid place-items-center">
                 {updateComponent && <BoardForm id={id} change={updateCompleteHandler} board={{title:board.title, content:board.content}}/>}
