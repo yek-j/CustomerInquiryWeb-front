@@ -48,12 +48,14 @@ const Board:React.FC = () => {
     }
 
     const resolvedHandler = () => {
-        if(id != undefined) {
+        if(board.admin != 'admin') alert('관리자만 변경할 수 있습니다.');
+        else if(id != undefined) {
+            
             fetchUpdateResolved(id) 
                 .then((saveOK) => {
                     if(saveOK) setReload(!reload);
                 });
-            }
+        }
         else alert("undefined 실패") ;
     }
 

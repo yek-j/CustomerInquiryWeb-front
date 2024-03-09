@@ -28,7 +28,7 @@ const BoardResolved:React.FC<Resolved> = (props) => {
                 />
             </svg>
 
-            <span className="text-[10px] font-medium sm:text-xs">
+            <span className="text-[10px] font-medium sm:text-xs cursor-pointer">
                 {props.name}       
             </span>
         </strong>
