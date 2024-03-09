@@ -85,24 +85,29 @@ const Board:React.FC = () => {
     return(
         <div>
             <Header admin={board.admin} />
-            <div className="flex justify-end">
-                <a className="group my-1 mr-10 relative inline-block text-sm font-medium text-red-600 focus:outline-none focus:ring active:text-red-500"
-                    onClick={backBtnHandler}>
-                    <span className="absolute inset-0 border border-current"></span>
-                    <span
-                        className="block border border-current bg-white px-12 py-3 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1"
-                    >
-                        돌아가기
-                    </span>
-                </a>
-            </div>
+            
                 {!updateComponent && <BoardDetail board={board} resolved={resolvedHandler} update={updateComponentHandler} delete={deleteBoardHandler}/>}
-            <div>
-                <BoardComment id={id}/>
-            </div>
             <div className="grid place-items-center">
                 {updateComponent && <BoardForm id={id} change={updateCompleteHandler} board={{title:board.title, content:board.content}}/>}
             </div>
+            { /** detail 컴포넌트로 이동 버튼 */
+                updateComponent && 
+                <div className="flex justify-end">
+                    <a className="group my-1 ml-10 relative inline-block text-sm font-medium text-red-600 focus:outline-none focus:ring active:text-red-500"
+                        onClick={backBtnHandler}>
+                        <span className="absolute inset-0 border border-current"></span>
+                        <span
+                            className="block border border-current bg-white px-12 py-3 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1"
+                        >
+                            돌아가기
+                        </span>
+                    </a>
+                </div>
+            }
+            <div>
+               { !updateComponent && <BoardComment id={id}/> }
+            </div>
+            
         </div>
     );
 }
