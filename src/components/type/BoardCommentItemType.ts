@@ -1,4 +1,5 @@
-export type boardCommentItemType =  {
+export type BoardCommentType =  {
+    id: number
     writer: string,
     comment: string,
     date: string,

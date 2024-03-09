@@ -11,7 +11,6 @@ const Board:React.FC = () => {
     const navigate = useNavigate();
     const {id} = useParams();
     const [board, setBoard] = useState<BoardDetailType>({
-        boardComment:[{writer:'', comment:'', date:''}],
         title: '',
         content: '',
         wdate: '',
@@ -40,8 +39,10 @@ const Board:React.FC = () => {
 
     const deleteBoardHandler = () => {
         if(id != undefined) {
-            fetchDeleteBoard(id)
-                .then(deleteOK => { if(deleteOK) navigate("/")});
+            if(confirm("삭제하겠습니까?") === true) {
+                fetchDeleteBoard(id)
+                    .then(deleteOK => { if(deleteOK) navigate("/")});
+            }
         }
         else alert("undefined 삭제 실패") ;
     }
@@ -97,7 +98,7 @@ const Board:React.FC = () => {
             </div>
                 {!updateComponent && <BoardDetail board={board} resolved={resolvedHandler} update={updateComponentHandler} delete={deleteBoardHandler}/>}
             <div>
-                <BoardComment id={id} comment={board.boardComment}/>
+                <BoardComment id={id}/>
             </div>
             <div className="grid place-items-center">
                 {updateComponent && <BoardForm id={id} change={updateCompleteHandler} board={{title:board.title, content:board.content}}/>}

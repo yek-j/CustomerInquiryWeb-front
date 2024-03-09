@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const BoardList: React.FC = () => {
 
-    const [boardList, setBoardList] = useState<[BoardItemType]>([{
+    const [boardList, setBoardList] = useState<BoardItemType[]>([{
         id:0, writerName:'', groupName:'', title:'', preview:'', wdate:'', resolved:false
     }]);
     const [page, setPage] = useState(0);
