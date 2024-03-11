@@ -21,23 +21,66 @@ const Header:React.FC<stateAdmin> = (props) => {
         navigate("/signin");
     }
 
+    const infoPageHandler = () => {
+        navigate("/info");
+    }
+
     return (
-        <header className="grid grid-cols-2 bg-slate-50 rounded-lg w-full h-14 my-3 drop-shadow-sm	">
-            <img className="pl-6 py-1" src="/src/assets/logo.jpg" onClick={homeHandler}/>
-            
-            <details className="py-3 w-32 justify-self-end mr-5">
-                <summary className="rounded-lg bg-indigo-100 marker:[font-size:0px] w-32 text-center text-lg cursor-pointer">{userName} 님!</summary>
-                <ul className="text-center bg-white w-32 rounded-lg">
-                    {
-                        props.admin == "admin" &&
-                        <li><Link to="/admin">관리자 페이지</Link></li>
-                    }
-                    <hr/>
-                    <li><a>사용자 정보 변경</a></li>
-                    <hr/>
-                    <li><a onClick={signOutHandler}>로그아웃</a></li>
-                </ul>
-            </details>
+        <header className="bg-white">
+            <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+                <div className="flex h-16 items-center justify-between">
+                <div className="flex-1 md:flex md:items-center md:gap-12">
+                    <img className="pl-6 py-1 cursor-pointer" src="/src/assets/logo.jpg" onClick={homeHandler}/>
+                </div>
+
+                <div className="md:flex md:items-center md:gap-12">
+                    <nav aria-label="Global" className="hidden md:block">
+                        <ul className="flex items-center gap-6 text-sm">
+                        {
+                            props.admin == "admin" &&
+                            <li><Link to="/admin"><p className="text-gray-500 transition hover:text-gray-500/75">관리자 페이지</p></Link></li>
+                        }
+                            <li>
+                                <a className="text-gray-500 transition hover:text-gray-500/75 cursor-pointer" onClick={infoPageHandler}> 사용자 정보 </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <div className="flex items-center gap-4">
+                        <div className="sm:flex sm:gap-4">
+                            <p
+                            className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow"
+                            >
+                            {userName} 님
+                            </p>
+                            <div className="hidden sm:flex">
+                                <a
+                                    className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 cursor-pointer"
+                                    onClick={signOutHandler}
+                                >
+                                    로그아웃
+                                </a>
+                            </div>
+                        </div>
+
+                    <div className="block md:hidden">
+                        <button className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        </button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
         </header>
     );
 }

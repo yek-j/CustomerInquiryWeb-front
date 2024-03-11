@@ -5,6 +5,7 @@ import Signup from './Pages/SiginupPage';
 import AdminCheckPage from './Pages/AdminCheckPage';
 import AdminPage from './Pages/AdminPage';
 import Board from './Pages/BoardPage';
+import UserInfoPage from './Pages/UserInfoPage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/admin" element={<AdminPage/>}/>
           <Route path="/admincheck" element={<AdminCheckPage/>}/>
           <Route path="/board/:id" element={<Board/>}/>
+          <Route path="/info" element={<UserInfoPage/>}/>
         </Routes>
     </Router>
   )
