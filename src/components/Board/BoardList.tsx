@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from "react";
+import { useRecoilState } from "recoil";
 import BoardItem from "./BoardItem";
 import { BoardItemType } from "../type/BoardItemType";
 import { fetchList } from "./BoardFetch";
 import { Link } from "react-router-dom";
+import { filterState } from "../state/listFilterState";
 
 
 
 const BoardList: React.FC = () => {
+    const [filter, ] = useRecoilState(filterState);
 
     const [boardList, setBoardList] = useState<BoardItemType[]>([{
         id:0, writerName:'', groupName:'', title:'', preview:'', wdate:'', resolved:false
@@ -16,20 +19,20 @@ const BoardList: React.FC = () => {
 
     useEffect(() => {
 
-        fetchList(0)
+        fetchList(0, filter.resolved, filter.writer)
             .then((data) => {
                 setBoardList(data.list);
                 setTotalPage(data.total);
                 setPage(0);
             });
 
-    }, []);
+    }, [filter]);
 
     const nextPage = () => {
         if(page == totalPage-1) return;
         
         setPage(page + 1);
-        fetchList(page + 1)
+        fetchList(page + 1, filter.resolved, filter.writer)
         .then(data => {
             setBoardList(data.list);
             setTotalPage(data.total);
@@ -39,7 +42,7 @@ const BoardList: React.FC = () => {
     const prevPage = () => {
         if(page ==  0) return;
         setPage(page - 1);
-        fetchList(page - 1)
+        fetchList(page - 1, filter.resolved, filter.writer)
         .then(data => {
             setBoardList(data.list);
             setTotalPage(data.total);

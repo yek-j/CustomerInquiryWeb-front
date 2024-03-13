@@ -1,8 +1,8 @@
 import { BoardPageType, SaveBoard } from "../type/BoardItemType";
 
-export const fetchList = async (page:number): Promise<BoardPageType> =>  {
-    let api = '/boardlist';
-    if(page > 0) api = api + '/' + page;
+export const fetchList = async (page:number, resolved:string, writer:string): Promise<BoardPageType> =>  {
+    
+    let api = '/boardlist?page='+page+'&resolved='+resolved+'&writer='+writer;
 
     const res = await fetch(import.meta.env.VITE_API_URL + api, {
         method: 'GET',
