@@ -2,6 +2,9 @@ import React, {ChangeEvent, FormEvent, useState, useEffect} from "react";
 import { fetchSaveBoard, fetchUpdateBoard } from "./BoardFetch";
 import { SaveBoard } from "../type/BoardItemType";
 
+// react-quill
+import QuillEditor from "./QuillEditor";
+
 type BoardForm = {
     board: SaveBoard | null,
     id: string | undefined,
@@ -9,11 +12,13 @@ type BoardForm = {
 }
 
 const BoardForm: React.FC<BoardForm> = (props) => {
-    const [formData, setFormData] = useState<SaveBoard>({title: '', content: ''});
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
 
     useEffect(() => {
         if (props.board != null) {
-            setFormData({title:props.board.title, content:props.board.content});
+            setTitle(props.board.title);
+            setContent(props.board.content);
         }        
     }, []);
 
@@ -21,12 +26,15 @@ const BoardForm: React.FC<BoardForm> = (props) => {
         e.preventDefault();
 
         if(props.id === '') {
-            fetchSaveBoard(formData)
+            fetchSaveBoard(title, content)
                 .then((saveOK) => {
-                    if(saveOK) setFormData({title: '', content: ''});
+                    if(saveOK) {
+                        setTitle('');
+                        setContent('');
+                    }
                 });
         } else if(props.id != undefined) {
-            fetchUpdateBoard(props.id, formData) 
+            fetchUpdateBoard(props.id, title, content) 
                 .then((saveOK) => {
                     if(saveOK) props.change;
                 });
@@ -35,12 +43,8 @@ const BoardForm: React.FC<BoardForm> = (props) => {
         }
     }
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+    const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.target.value);
     };
 
     return (
@@ -56,22 +60,14 @@ const BoardForm: React.FC<BoardForm> = (props) => {
                                 id="title"
                                 name="title"
                                 maxLength={50}
-                                value={formData.title}
-                                onChange={handleChange}
+                                value={title}
+                                onChange={inputChangeHandler}
                             />
                 </div>
                 <div>
-                    
                     <label className="sr-only" htmlFor="content">내용</label>
-                          <textarea
-                            className="w-full rounded-lg border-gray-200 p-3"
-                            placeholder="내용"
-                            rows={10}
-                            id="content"
-                            name="content"
-                            value={formData.content}
-                            onChange={handleChange}
-                            ></textarea>
+                    
+                    <QuillEditor content={content} setContent={setContent} />
                 </div>
 
                 <div className="mt-4">

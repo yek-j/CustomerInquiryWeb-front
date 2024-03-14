@@ -2,6 +2,8 @@ import React from "react";
 import { BoardDetailType } from "../type/BoardItemType";
 import Button from "../Common/Button";
 import BoardResolved from "./BoardResolved";
+import DOMPurify from "dompurify";
+
 
 type stateBoard = {
     board: BoardDetailType
@@ -12,7 +14,6 @@ type stateBoard = {
 
 const BoardDetail:React.FC<stateBoard> = (props) => {
 
-
     return(
         <div className="rounded-xl border-2 border-gray-100 bg-white mx-10">
             <div className="flex items-start gap-4 p-4 flex-shrink-0 w-full pb-20">
@@ -20,9 +21,8 @@ const BoardDetail:React.FC<stateBoard> = (props) => {
                     <p className="block font-bold sm:text-lg pb-4">
                         {props.board.title}
                     </p>
-                    <p className="block line-clamp-2 text-md text-gray-700">
-                        {props.board.content}
-                    </p>
+                    <p className="block line-clamp-2 text-md text-gray-700"
+                        dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(props.board.content)}}/>
                 </div>
             </div>
             <div className="flex justify-end pb-6 pr-3">

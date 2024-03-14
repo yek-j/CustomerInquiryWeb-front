@@ -42,7 +42,7 @@ export const fetchDeleteBoard = async (id: string) =>  {
     return deleteOK;
 }
 
-export const fetchSaveBoard = async (board: SaveBoard) => {
+export const fetchSaveBoard = async (title:string, content:string) => {
     let saveOK = false;
     await fetch(import.meta.env.VITE_API_URL + '/add-board', {
         method: 'POST',
@@ -50,7 +50,10 @@ export const fetchSaveBoard = async (board: SaveBoard) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         }, 
-        body: JSON.stringify(board)
+        body: JSON.stringify({
+            title: title,
+            content: content,
+        })
     })
     .then(res => {
         if(res.status === 200) {
@@ -69,7 +72,7 @@ export const fetchSaveBoard = async (board: SaveBoard) => {
     return saveOK;
 }
 
-export const fetchUpdateBoard = async (id: string, board: SaveBoard) => {
+export const fetchUpdateBoard = async (id: string, title:string, content:string) => {
     let saveOK = false;
     await fetch(import.meta.env.VITE_API_URL + '/board/' + id ,{
         method: 'PUT',
@@ -77,7 +80,10 @@ export const fetchUpdateBoard = async (id: string, board: SaveBoard) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         }, 
-        body: JSON.stringify(board)
+        body: JSON.stringify({
+            title: title,
+            content: content,
+        })
     })
     .then(res => {
         if(res.status === 200) {
