@@ -27,10 +27,10 @@ const Header:React.FC<stateAdmin> = (props) => {
 
     return (
         <header className="bg-white">
-            <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+            <div className=" w-screen sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                 <div className="flex-1 md:flex md:items-center md:gap-12">
-                    <img className="pl-6 py-1 cursor-pointer" src="/src/assets/logo.jpg" onClick={homeHandler}/>
+                    <img className="py-1 cursor-pointer" src="/src/assets/logo.jpg" onClick={homeHandler}/>
                 </div>
 
                 <div className="md:flex md:items-center md:gap-12">
