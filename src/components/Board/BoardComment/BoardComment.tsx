@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState, useEffect, ReactNode} from "react";
+import React, { ChangeEvent, FormEvent, useState, useEffect} from "react";
 import {useNavigate} from 'react-router-dom'
 import BoardCommentForm from "./BoardCommentForm";
 import BoardCommentItem from "./BoardCommentItem";
