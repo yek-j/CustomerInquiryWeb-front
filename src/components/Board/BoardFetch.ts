@@ -1,4 +1,4 @@
-import { BoardPageType, SaveBoard } from "../type/BoardItemType";
+import { BoardPageType } from "../type/BoardItemType";
 
 export const fetchList = async (page:number, resolved:string, writer:string): Promise<BoardPageType> =>  {
     
